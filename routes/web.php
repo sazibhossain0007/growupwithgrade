@@ -29,10 +29,9 @@ Route::post('/login/teacher', 'Auth\LoginController@teacherLogin');
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::middleware("auth")->group(function(){
 
-});
-Route::prefix('/student')->name('student.')->namespace('Student')->middleware("auth:student")->group(function(){
+//Route::prefix('/student')->name('student.')->namespace('Student')->middleware("auth:student")->group(function(){
+Route::prefix('/student')->name('student.')->middleware("auth:student")->group(function(){
 	Route::get('dashboard', function () {
 	    return view('student.index');
 	})->name("dashboard");
@@ -47,9 +46,16 @@ Route::prefix('/student')->name('student.')->namespace('Student')->middleware("a
 	    return view('student.library');
 	});
 
+
+    Route::get('/profile/{id}', "Teacher\DashboardController@showProfile");
+    Route::post('/profile/{id}', "Teacher\DashboardController@updateProfile");
+
     Route::get('/forum', "PostController@index");
     Route::post('/forum/addNew', "PostController@store");
-
+    Route::post('/comment/addNew', "PostController@storeComment");
+    Route::get('/post/{id}', "PostController@singlePost");
+    Route::post('/forum/edit/{id}', "PostController@editPost");
+    Route::post('/forum/delete/{id}', "PostController@deletePost");
 });
 
 //Route::prefix('/teacher')->name('teach.')->namespace('Teacher')->middleware("auth:teacher")->group(function(){
@@ -72,6 +78,9 @@ Route::prefix('/teacher')->name('teach.')->middleware("auth:teacher")->group(fun
     Route::get('/forum', "PostController@index");
     Route::post('/forum/addNew', "PostController@store");
     Route::post('/comment/addNew', "PostController@storeComment");
+    Route::get('/post/{id}', "PostController@singlePost");
+    Route::post('/forum/edit/{id}', "PostController@editPost");
+    Route::post('/forum/delete/{id}', "PostController@deletePost");
 
 	// Route::get('/coursedetails/{course}/addtopic', function () {
 	//     return view('teacher.addtopic');

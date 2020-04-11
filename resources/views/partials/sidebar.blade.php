@@ -16,7 +16,18 @@
                 <img src="{{ asset('profile_pics/'.Auth::user()->profile_pic) }}" class="img img-circle elevation-2" width="50px" height="50px" alt="User Image">
             </div>
             <div class="info">
+<!--                --><?php
+//                if(Auth::user()->getTable() == 'teachers'){
+//                    $url = 'teacher/forum/edit/'.$post['id'];
+//                }elseif (Auth::user()->getTable() == 'students'){
+//                    $url = 'student/forum/edit/'.$post['id'];
+//                }
+//                ?>
+                @if(Auth::user()->getTable() == 'teachers')
                 <a href="{{url('/teacher/profile/'.Auth::user()->teacher_id)}}" class="d-block">{{ Auth::user()->name }}</a>
+                @else
+                    <a href="#" class="d-block">{{ Auth::user()->name }}</a>
+                @endif
             </div>
         </div>
 
