@@ -31,6 +31,7 @@
         @include('partials.sidebar')
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
+            @include('flash-message')
             @yield('content')
         </div>
         <!-- /.content-wrapper -->
@@ -50,6 +51,11 @@
 <!-- AdminLTE for demo purposes -->
 <script src="{{ asset('js/demo.js') }}"></script>
 
+    <script>
+        setTimeout(function() {
+            $('.alert').fadeOut('fast');
+        }, 3000);
+    </script>
 @yield('script')
 
 </body>

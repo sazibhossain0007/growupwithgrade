@@ -9,7 +9,7 @@ class Teacher extends Authenticatable
 {
     use Notifiable;
 
-    protected $fillable = ["id","name","email","phone","password"];
+    protected $fillable = ["id","name","email","phone","password","profile_pic"];
 
 	protected $guard = 'teacher';
 

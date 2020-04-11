@@ -29,7 +29,9 @@ Route::post('/login/teacher', 'Auth\LoginController@teacherLogin');
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::middleware("auth")->group(function(){
 
+});
 Route::prefix('/student')->name('student.')->namespace('Student')->middleware("auth:student")->group(function(){
 	Route::get('dashboard', function () {
 	    return view('student.index');
@@ -45,20 +47,31 @@ Route::prefix('/student')->name('student.')->namespace('Student')->middleware("a
 	    return view('student.library');
 	});
 
+    Route::get('/forum', "PostController@index");
+    Route::post('/forum/addNew', "PostController@store");
+
 });
 
-Route::prefix('/teacher')->name('teach.')->namespace('Teacher')->middleware("auth:teacher")->group(function(){
+//Route::prefix('/teacher')->name('teach.')->namespace('Teacher')->middleware("auth:teacher")->group(function(){
+Route::prefix('/teacher')->name('teach.')->middleware("auth:teacher")->group(function(){
 
-	Route::get('dashboard', "DashboardController@index")->name("dashboard");
-	Route::get('/coursedetails/{id}', "DashboardController@courseDetails") ->name('coursedetails');
+	Route::get('dashboard', "Teacher\DashboardController@index")->name("dashboard");
+	Route::get('/coursedetails/{id}', "DashboardController@courseDetails") ->name('Teacher\coursedetails');
 
-	Route::resource('/coursedetails/{course}/topic', "TopicController");
-	Route::resource('/coursedetails/{course}/{topic}/assessment', "AssessmentController");
-	Route::resource('/coursedetails/{course}/{topic}/matarial', "TopicMatarialController");
-	
-	Route::resource('/coursedetails/{course}/{topic}/matarial', "TopicMatarialController");
-	Route::resource('/library', "LibraryController");
-	
+	Route::resource('/coursedetails/{course}/topic', "Teacher\TopicController");
+	Route::resource('/coursedetails/{course}/{topic}/assessment', "Teacher\AssessmentController");
+	Route::resource('/coursedetails/{course}/{topic}/matarial', "Teacher\TopicMatarialController");
+
+	Route::resource('/coursedetails/{course}/{topic}/matarial', "Teacher\TopicMatarialController");
+	Route::resource('/library', "Teacher\LibraryController");
+
+
+    Route::get('/profile/{id}', "Teacher\DashboardController@showProfile");
+    Route::post('/profile/{id}', "Teacher\DashboardController@updateProfile");
+
+    Route::get('/forum', "PostController@index");
+    Route::post('/forum/addNew', "PostController@store");
+    Route::post('/comment/addNew', "PostController@storeComment");
 
 	// Route::get('/coursedetails/{course}/addtopic', function () {
 	//     return view('teacher.addtopic');

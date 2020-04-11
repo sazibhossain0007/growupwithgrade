@@ -34,7 +34,7 @@
                             <div class="w3pvtits-services-grids">
                                 <span class="fa fa-leanpub ser-icon" aria-hidden="true"></span>
                                 <h4 class="text-bl my-4">{{ $course->course_title }}</h4>
-                                <a class="service-btn mt-xl-5 mt-4 btn" href="{{ route('teach.coursedetails', $course->id)}}">Read More<span class="fa fa-long-arrow-right ml-2"></span></a>
+{{--                                <a class="service-btn mt-xl-5 mt-4 btn" href="{{ route('teach.coursedetails', $course->id)}}">Read More<span class="fa fa-long-arrow-right ml-2"></span></a>--}}
                             </div>
                         </div>
                     @endforeach
