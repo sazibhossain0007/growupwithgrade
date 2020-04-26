@@ -18,6 +18,7 @@ class TopicController extends Controller
     public function index($course)
     {
         $topics = Course::findOrFail($course)->topics;
+        dd($topics);
         return view('teacher.topic.index', compact("topics", "course"));
     }
 

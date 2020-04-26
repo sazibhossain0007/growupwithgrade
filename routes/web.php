@@ -71,7 +71,6 @@ Route::prefix('/teacher')->name('teach.')->middleware("auth:teacher")->group(fun
 	Route::resource('/coursedetails/{course}/{topic}/matarial', "Teacher\TopicMatarialController");
 	Route::resource('/library', "Teacher\LibraryController");
 
-
     Route::get('/profile/{id}', "Teacher\DashboardController@showProfile");
     Route::post('/profile/{id}', "Teacher\DashboardController@updateProfile");
 
