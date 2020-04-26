@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMatarialsTable extends Migration
+class AddPhotoToTeachers extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class CreateMatarialsTable extends Migration
      */
     public function up()
     {
-        Schema::create('matarials', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        Schema::table('teachers', function (Blueprint $table) {
+            //
         });
     }
 
@@ -26,6 +25,8 @@ class CreateMatarialsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('matarials');
+        Schema::table('teachers', function (Blueprint $table) {
+            //
+        });
     }
 }
