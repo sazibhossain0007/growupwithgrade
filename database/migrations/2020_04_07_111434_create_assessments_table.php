@@ -15,6 +15,7 @@ class CreateAssessmentsTable extends Migration
     {
         Schema::create('assessments', function (Blueprint $table) {
             $table->id();
+            $table->integer("topic_id");
             $table->timestamps();
         });
     }

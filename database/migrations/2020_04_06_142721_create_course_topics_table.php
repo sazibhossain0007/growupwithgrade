@@ -15,6 +15,7 @@ class CreateCourseTopicsTable extends Migration
     {
         Schema::create('course_topics', function (Blueprint $table) {
             $table->id();
+            $table->integer("course_id");
             $table->string("name");
             $table->string("details");
             $table->boolean("is_complete");
