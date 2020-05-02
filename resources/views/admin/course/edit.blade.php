@@ -13,9 +13,9 @@
 			</div>
 			<div class="col-sm-6">
 				<ol class="breadcrumb float-sm-right">
-					<li class="breadcrumb-item"><a href="#">Home</a></li>
-					<li class="breadcrumb-item"><a href="{{ route('course.index')}}">courses</a></li>
-					<li class="breadcrumb-item active">course Update</li>
+					<li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
+					<li class="breadcrumb-item"><a href="{{ route('course.index')}}">Course</a></li>
+					<li class="breadcrumb-item active">Course Update</li>
 				</ol>
 			</div>
 		</div>
@@ -37,7 +37,7 @@
 			<div class="card-body">
 				<div class="form-group">
 					<label for="name">Course Id: </label>
-					<input type="text" value="{{ $course->id }}" class="form-control" id="id" name="id" placeholder="Enter name">
+					<input type="text" value="{{ $course->id }}" disabled class="form-control" id="id" name="id" placeholder="Enter name">
 					@error('id')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>

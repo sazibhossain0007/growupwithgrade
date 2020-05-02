@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 
 class Student extends Authenticatable
 {
@@ -20,5 +21,16 @@ class Student extends Authenticatable
     public function courses()
     {
     	return $this->belongsToMany(Course::class, 'student_courses');
+    }
+
+    public function by_course_id($course_id)
+    {
+        $courses = DB::table("student_courses")->where("student_id", $this->id)->get();
+        foreach($courses as $course)
+        {
+            if($course->course_id == $course_id) return true;
+        }
+        
+        return false;
     }
 }

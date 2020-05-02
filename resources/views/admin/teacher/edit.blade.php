@@ -37,7 +37,7 @@
 			<div class="card-body">
 				<div class="form-group">
 					<label for="name">Id: </label>
-					<input type="text" value="{{ $teacher->id }}" class="form-control" id="id" name="id" placeholder="Enter name">
+					<input type="text" value="{{ $teacher->id }}" disabled class="form-control" id="id" name="id" placeholder="Enter name">
 					@error('id')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -55,7 +55,7 @@
 				</div>
 				<div class="form-group">
 					<label for="name">Email: </label>
-					<input type="text" value="{{ $teacher->email }}" class="form-control" id="email" name="email" placeholder="Enter name">
+					<input type="text" value="{{ $teacher->email }}" disabled class="form-control" id="email" name="email" placeholder="Enter name">
 					@error('email')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -73,7 +73,7 @@
 				</div>
 				<div class="form-group">
 					<label for="name">Password: </label>
-					<input type="text" value="{{ $teacher->password }}" class="form-control" id="password" name="password" placeholder="Enter name">
+					<input type="text" class="form-control" id="password" name="password" placeholder="Enter name">
 					@error('password')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>

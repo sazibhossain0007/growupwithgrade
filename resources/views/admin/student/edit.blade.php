@@ -17,7 +17,7 @@
 			<div class="col-sm-6">
 				<ol class="breadcrumb float-sm-right">
 					<li class="breadcrumb-item"><a href="#">Home</a></li>
-					<li class="breadcrumb-item"><a href="{{ route('student.index')}}">Students</a></li>
+					<li class="breadcrumb-item"><a href="{{ route('student.index')}}">Student</a></li>
 					<li class="breadcrumb-item active">Student Update</li>
 				</ol>
 			</div>
@@ -40,7 +40,7 @@
 			<div class="card-body">
 				<div class="form-group">
 					<label for="name">Id: </label>
-					<input type="text" value="{{ $student->id }}" class="form-control" id="id" name="id" placeholder="Enter name">
+					<input type="text" value="{{ $student->id }}" disabled class="form-control" id="id" name="id" placeholder="Enter name">
 					@error('id')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -58,7 +58,7 @@
 				</div>
 				<div class="form-group">
 					<label for="name">Email: </label>
-					<input type="text" value="{{ $student->email }}" class="form-control" id="email" name="email" placeholder="Enter name">
+					<input type="text" value="{{ $student->email }}" disabled class="form-control" id="email" name="email" placeholder="Enter name">
 					@error('email')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -80,15 +80,15 @@
                   <label>Enroll Course</label>
                   <select class="select2" multiple="multiple" name="courses[]" data-placeholder="Select a Course" style="width: 100%;">
                   @foreach($courses as $course)
-                    <option value="{{ $course->id }}">{{ $course->course_title }}</option>
+                    <option value="{{ $course->id }}" {{ $student->by_course_id($course->id) ? "selected" : ""}}>{{ $course->course_title }}</option>
                   @endforeach
                   </select>
                 </div>
                 
                 <div class="form-group">
                   <label>Guardian </label>
-                  <select class="select2" multiple="multiple" name="guardian" data-placeholder="Select Course" style="width: 100%;">
-                  	@foreach($guardians as $guardian)
+                  <select class="select2" name="guardian" style="width: 100%;">
+					  @foreach($guardians as $guardian)
                     <option value="{{ $guardian->id }}">({{ $guardian->id }}) {{ $guardian->name }}</option>
                   @endforeach
                   </select>

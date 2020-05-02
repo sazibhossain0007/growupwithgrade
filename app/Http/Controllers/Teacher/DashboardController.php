@@ -14,14 +14,14 @@ class DashboardController extends Controller
    	public function index()
    	{
    		$teacher = Auth::user();
-   		$courses = $teacher->courses;
+        $courses = $teacher->courses;
    		return view('teacher.index', compact('courses'));
    	}
 
    	public function courseDetails($id)
    	{
    		$course = Course::findOrFail($id);
-   		return view('teacher.coursedetails', compact('course'));
+   		return view('teacher.coursedetails', compact('course', 'id'));
    	}
 
    	public function topicList($course)

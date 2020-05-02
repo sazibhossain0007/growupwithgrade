@@ -26,7 +26,6 @@ class TeacherController extends Controller
      */
     public function create()
     {
-         
         $courses = Course::latest()->get();
         return view('admin.teacher.create', compact('courses'));
     }
@@ -40,15 +39,15 @@ class TeacherController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'id' => 'required|max:11',
+            'id' => 'required|max:11|unique:teachers',
             'name' => 'required|string|max:255',
-            'email' => 'required|email',
-            'phone' => 'required|min:11',
+            'email' => 'required|email|unique:teachers',
+            'phone' => 'required|min:11|unique:teachers',
             'password' => 'required|min:8',
             'courses' => 'required'
         ]);
         
-        $teacher = Teacher::create([
+        Teacher::create([
             "id" => $request->id,
             "name" => $request->name,
             "email" => $request->email,
@@ -98,17 +97,22 @@ class TeacherController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validatedData = $request->validate([
-            'id' => 'required|max:11',
+        $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email',
             'phone' => 'required|min:11',
-            'phone' => 'required',
-            'password' => 'required|min:8'
+            'password' => 'nullable|min:8'
         ]);
        
-        Teacher::findOrFail($id)->update($request->all());
+        $teacher = Teacher::findOrFail($id);
+        $teacher->name = $request->name;
+        $teacher->phone = $request->phone;
 
+        if(isset($request->password)){
+            $teacher->password = bcrypt($request->password);
+            $teacher->save();
+        }
+        
+        $teacher->save();
 
         return redirect()->route("teacher.index")->withSuccess("teachert update Success.");
     }

@@ -15,13 +15,13 @@
 	<div class="container-fluid">
 		<div class="row mb-2">
 			<div class="col-sm-6">
-				<h1>guardian</h1>
+				<h1>Guardian</h1>
 				<a href="{{ route('guardian.create') }}" class="btn btn-primary">Create</a>
 			</div>
 			<div class="col-sm-6">
 				<ol class="breadcrumb float-sm-right">
-					<li class="breadcrumb-item"><a href="#">Home</a></li>
-					<li class="breadcrumb-item active">Blank Page</li>
+					<li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
+					<li class="breadcrumb-item active">Guardian</li>
 				</ol>
 			</div>
 		</div>
@@ -45,6 +45,8 @@
 					<tr>
 						<th>ID</th>
 						<th>Name</th>
+						<th>Email</th>
+						<th>Phone</th>
 						<th>Action</th>
 					</tr>
 				</thead>
@@ -55,7 +57,6 @@
 						<td>{{ $guardian->name }}</td>
 						<td>{{ $guardian->email }}</td>
 						<td>{{ $guardian->phone }}</td>
-						<td>{{ $guardian->password }}</td>
 						<td>
 							<a href="{{ route('guardian.edit', $guardian->id)}}" class="btn btn-primary">Edit</a>
 
@@ -72,6 +73,8 @@
 					<tr>
 						<th>ID</th>
 						<th>Name</th>
+						<th>Email</th>
+						<th>Phone</th>
 						<th>Action</th>
 					</tr>
 				</tfoot>

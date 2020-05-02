@@ -62,7 +62,7 @@ Route::prefix('/student')->name('student.')->middleware("auth:student")->group(f
 Route::prefix('/teacher')->name('teach.')->middleware("auth:teacher")->group(function(){
 
 	Route::get('dashboard', "Teacher\DashboardController@index")->name("dashboard");
-	Route::get('/coursedetails/{id}', "Teacher\DashboardController@courseDetails");
+	Route::get('/coursedetails/{id}', "Teacher\DashboardController@courseDetails")->name("course.coursedetails.show");
 
 	Route::resource('/coursedetails/{course}/topic', "Teacher\TopicController");
 	Route::resource('/coursedetails/{course}/{topic}/assessment', "Teacher\AssessmentController");

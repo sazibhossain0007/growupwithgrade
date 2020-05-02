@@ -7,6 +7,7 @@ use App\Student;
 use App\Course;
 use App\Guardian;
 use Illuminate\Support\Facades\DB;
+use PHPUnit\Framework\MockObject\Builder\Stub;
 
 class StudentController extends Controller
 {
@@ -28,12 +29,8 @@ class StudentController extends Controller
      */
     public function create()
     {
-
         $courses = Course::latest()->get();
-        
         $guardians = Guardian::latest()->get();
-        
-
         return view('admin.student.create', compact('courses','guardians'));
     }
 
@@ -46,15 +43,15 @@ class StudentController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'id' => 'required|max:11',
+            'id' => 'required|max:11|unique:students',
             'name' => 'required|string|max:255',
-            'email' => 'required|email',
-            'phone' => 'required|min:11',
+            'email' => 'required|email|unique:students',
+            'phone' => 'required|min:11|unique:students',
             'password' => 'required|min:8',
             'courses' => 'required'
         ]);
 
-        $student = Student::create([
+        Student::create([
             "id" => $request->id,
             "name" => $request->name,
             "email" => $request->email,
@@ -108,39 +105,34 @@ class StudentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // dd($request->all());
        $request->validate([
-            'id' => 'required|max:11',
             'name' => 'required|string|max:255',
-            'email' => 'required|email',
             'phone' => 'required|min:11',
-            'password' => 'required|min:8',
+            'guardian' => 'required',
+            'password' => 'nullable|min:8',
             'courses' => 'required'
         ]);
         
-        $student = Student::create([
-            "id" => $request->id,
-            "name" => $request->name,
-            "email" => $request->email,
-            "phone" => $request->phone,
-            "password" => bcrypt($request->password)
-        ]);
+        $student = Student::findOrFail($id);
+        $student->name = $request->name;
+        $student->phone = $request->phone;
+        $student->guardian_id = $request->guardian;
+
+        if(isset($request->password)){
+            $student->password = bcrypt($request->password);
+            $student->save();
+        }
+        
+        $student->save();
+
+        DB::table("student_courses")->where('student_id', $student->id)->delete();
 
         foreach ($request->courses as $course) {
             DB::table("student_courses")->insert([
-               "student_id" =>  $request->id,
+               "student_id" =>  $student->id,
                "course_id" => $course
             ]);
-
         }
-         foreach ($request->guardians as $guardian) {
-            DB::table("guardians")->insert([
-               "student_id" =>  $request->id,
-               "guardian_id" => $guardian
-            ]);
-
-        }
-
 
         return redirect()->route("student.index")->withSuccess("Student Create Success.");
     }

@@ -9,12 +9,14 @@
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1>Blank Page for teacher</h1>
+                            <h1>Topic Detials</h1>
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                <li class="breadcrumb-item active">Blank Page</li>
+                                <li class="breadcrumb-item"><a href="{{ route('teach.dashboard') }}">Courses</a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('teach.course.coursedetails.show', $course) }}">Course</a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('teach.topic.index', $course) }}">List of Topics</a></li>
+                                <li class="breadcrumb-item active">Topic Detials</li>
                             </ol>
                         </div>
                     </div>
@@ -23,7 +25,7 @@
 
             <!-- Main content -->
             <section class="content">
-                <h2 style="text-align: center;">Course Name</h2>
+                <h2 style="text-align: center;">{{ $topic->course->course_title}}</h2>
                  <table id="example1" class="table table-bordered table-striped">
                 <thead>
                     <tr>
@@ -52,7 +54,6 @@
 
                         
                         <td>
-                            <a class="btn btn-primary" href="{{ route('teach.matarial.index', [$course,$topic->id]) }}">Add File</a>
                             <a class="btn btn-primary" href="">Add Assessment</a>
 
                         </td>
@@ -61,8 +62,9 @@
                 </tbody>
                 <tfoot>
                     <tr>
-                        <th>Topic List</th>
+                        <th>Topic </th>
                         <th>Description</th>
+                        <th>File</th>
                         <th>Action</th>
                     </tr>
                 </tfoot>

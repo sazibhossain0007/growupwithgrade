@@ -36,11 +36,11 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'id' => 'required|max:11',
+        $request->validate([
+            'id' => 'required|max:11|unique:courses',
             'course_title' => 'required|string|max:255',
-            
         ]);
+        
         Course::create($request->all());
 
         return redirect()->route("course.index")->withSuccess("course create Success.");
@@ -81,14 +81,10 @@ class CourseController extends Controller
     {
         
         $validatedData = $request->validate([
-            'id' => 'required|max:11',
             'course_title' => 'required|string|max:255',
-            
         ]);
        
         Course::findOrFail($id)->update($request->all());
-
-
         return redirect()->route("course.index")->withSuccess("course update Success.");
     }
 

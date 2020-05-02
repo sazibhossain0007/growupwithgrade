@@ -5,7 +5,7 @@
         alt="AdminLTE Logo"
         class="brand-image img-circle elevation-3"
         style="opacity: .8">
-        <span class="brand-text font-weight-light">AdminLTE 3</span>
+        <span class="brand-text font-weight-light">Title</span>
     </a>
 
     <!-- Sidebar -->
@@ -13,16 +13,9 @@
         <!-- Sidebar user (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img src="{{ asset('profile_pics/'.Auth::user()->profile_pic) }}" class="img img-circle elevation-2" width="50px" height="50px" alt="User Image">
+                <img src="{{ asset('img/user2-160x160.jpg') }}" class="img img-circle elevation-2" width="50px" height="50px" alt="User Image">
             </div>
             <div class="info">
-<!--                --><?php
-//                if(Auth::user()->getTable() == 'teachers'){
-//                    $url = 'teacher/forum/edit/'.$post['id'];
-//                }elseif (Auth::user()->getTable() == 'students'){
-//                    $url = 'student/forum/edit/'.$post['id'];
-//                }
-//                ?>
                 @if(Auth::user()->getTable() == 'teachers')
                 <a href="{{url('/teacher/profile/'.Auth::user()->teacher_id)}}" class="d-block">{{ Auth::user()->name }}</a>
                 @else
@@ -34,6 +27,28 @@
         <!-- Sidebar Menu -->
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            @if(Auth::guard('student')->check())
+                <li class="nav-item">
+                    <a href="{{url('/student/forum')}}" class="nav-link" target="_blank" >
+                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>Forum</p>
+                    </a>
+                </li>
+            @elseif(Auth::guard('teacher')->check())
+                <li class="nav-item">
+                    <a href="{{ route('teach.dashboard') }}" class="nav-link" >
+                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>Courses</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{url('/teacher/forum')}}" class="nav-link" target="_blank" >
+                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>Forum</p>
+                    </a>
+                </li>
+            @elseif(Auth::guard('guardian')->check())
+            @else
                 <li class="nav-item has-treeview">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -74,54 +89,7 @@
                         <p>Library</p>
                     </a>
                 </li>
-                 <li class="nav-item">
-                    <a href="" class="nav-link">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
-                        <p>Discussion</p>
-                    </a>
-                </li>
-                 <li class="nav-item">
-                     @if(Auth::user()->getTable() == 'teachers')
-                    <a href="{{url('/teacher/forum')}}" class="nav-link" target="_blank" >
-                    @endif
-                    @if(Auth::user()->getTable() == 'students')
-                    <a href="{{url('/student/forum')}}" class="nav-link" target="_blank" >
-                    @endif
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
-                        <p>Forum</p>
-                    </a>
-                </li>
-
-                <li class="nav-item has-treeview">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
-                        <p>
-                            test
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="../../index.html" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Dashboard v1</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="../../index2.html" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Dashboard v2</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="../../index3.html" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Dashboard v3</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
+            @endif
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

@@ -36,15 +36,15 @@ class GuardianController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'id' => 'required|max:11|unique:students',
+        $request->validate([
+            'id' => 'required|max:11|unique:guardians',
             'name' => 'required|string|max:255',
-            'email' => 'required|email',
-            'phone' => 'required|min:11',
+            'email' => 'required|email|unique:guardians',
+            'phone' => 'required|min:11|unique:guardians',
             'password' => 'required|min:8',
 
         ]);
-         $guardian = Guardian::create([
+         Guardian::create([
             "id" => $request->id,
             "name" => $request->name,
             "email" => $request->email,
@@ -52,8 +52,6 @@ class GuardianController extends Controller
             "guardian_id" => $request->guardian,
             "password" => bcrypt($request->password)
         ]);
-
-        Guardian::create($request->all());
 
         return redirect()->route("guardian.index")->withSuccess("guardian create Success.");
     }
@@ -91,24 +89,21 @@ class GuardianController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validatedData = $request->validate([
-            'id' => 'required|max:11',
+        $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email',
             'phone' => 'required|min:11',
-            'password' => 'required|min:8'
+            'password' => 'nullable|min:8'
         ]);
-         $guardian = Guardian::create([
-            "id" => $request->id,
-            "name" => $request->name,
-            "email" => $request->email,
-            "phone" => $request->phone,
-            "guardian_id" => $request->guardian,
-            "password" => bcrypt($request->password)
-        ]);
-       
-        Guardian::findOrFail($id)->update($request->all());
 
+        $guardian = Guardian::findOrFail($id);
+        $guardian->name = $request->name;
+        $guardian->phone = $request->phone;
+        
+        if(isset($request->password)){
+            $guardian->password = bcrypt($request->password);
+        }
+        
+        $guardian->save();
 
         return redirect()->route("guardian.index")->withSuccess("Guardian update Success.");
     }
@@ -121,7 +116,7 @@ class GuardianController extends Controller
      */
     public function destroy($id)
     {
-       Guardian::findOrFail($id)->delete();
+        Guardian::findOrFail($id)->delete();
         return redirect()->route("guardian.index")->withSuccess("Guardian delete Success.");
     }
 }

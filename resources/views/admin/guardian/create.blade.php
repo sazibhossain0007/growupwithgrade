@@ -13,8 +13,9 @@
 			</div>
 			<div class="col-sm-6">
 				<ol class="breadcrumb float-sm-right">
-					<li class="breadcrumb-item"><a href="#">Home</a></li>
-					<li class="breadcrumb-item active">Blank Page</li>
+					<li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
+					<li class="breadcrumb-item"><a href="{{ route('guardian.index')}}">Guardian</a></li>
+					<li class="breadcrumb-item active">Guardian Create</li>
 				</ol>
 			</div>
 		</div>
@@ -74,7 +75,7 @@
 
 				<div class="form-group">
 					<label for="password">Password: </label>
-					<input type="text" class="form-control @error('password') is-invalid @enderror" id="password" name="password" placeholder="Enter name" value="">
+					<input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" placeholder="Enter name" value="">
 
 					@error('password')
                         <span class="invalid-feedback" role="alert">

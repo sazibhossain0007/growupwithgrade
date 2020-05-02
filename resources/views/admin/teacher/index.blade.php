@@ -20,8 +20,8 @@
 			</div>
 			<div class="col-sm-6">
 				<ol class="breadcrumb float-sm-right">
-					<li class="breadcrumb-item"><a href="#">Home</a></li>
-					<li class="breadcrumb-item active">Blank Page</li>
+					<li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
+					<li class="breadcrumb-item active">Teacher</li>
 				</ol>
 			</div>
 		</div>
@@ -45,6 +45,8 @@
 					<tr>
 						<th>ID</th>
 						<th>Name</th>
+						<th>Email</th>
+						<th>Phone</th>
 						<th>Action</th>
 					</tr>
 				</thead>
@@ -55,7 +57,6 @@
 						<td>{{ $teacher->name }}</td>
 						<td>{{ $teacher->email }}</td>
 						<td>{{ $teacher->phone }}</td>
-						<td>{{ $teacher->password }}</td>
 						<td>
 							<a href="{{ route('teacher.edit', $teacher->id)}}" class="btn btn-primary">Edit</a>
 
@@ -72,6 +73,8 @@
 					<tr>
 						<th>ID</th>
 						<th>Name</th>
+						<th>Email</th>
+						<th>Phone</th>
 						<th>Action</th>
 					</tr>
 				</tfoot>

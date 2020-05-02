@@ -9,13 +9,13 @@
 	<div class="container-fluid">
 		<div class="row mb-2">
 			<div class="col-sm-6">
-				<h1>guardian Update</h1>
+				<h1>Guardian Update</h1>
 			</div>
 			<div class="col-sm-6">
 				<ol class="breadcrumb float-sm-right">
-					<li class="breadcrumb-item"><a href="#">Home</a></li>
-					<li class="breadcrumb-item"><a href="{{ route('guardian.index')}}">teachers</a></li>
-					<li class="breadcrumb-item active">teacher Update</li>
+					<li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
+					<li class="breadcrumb-item"><a href="{{ route('guardian.index')}}">Guardian</a></li>
+					<li class="breadcrumb-item active">Guardian Update</li>
 				</ol>
 			</div>
 		</div>
@@ -37,7 +37,7 @@
 			<div class="card-body">
 				<div class="form-group">
 					<label for="name">Id: </label>
-					<input type="text" value="{{ $guardian->id }}" class="form-control" id="id" name="id" placeholder="Enter name">
+					<input type="text" value="{{ $guardian->id }}" disabled class="form-control" id="id" name="id" placeholder="Enter name">
 					@error('id')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -55,7 +55,7 @@
 				</div>
 				<div class="form-group">
 					<label for="name">Email: </label>
-					<input type="text" value="{{ $guardian->email }}" class="form-control" id="email" name="email" placeholder="Enter name">
+					<input type="text" value="{{ $guardian->email }}" disabled class="form-control" id="email" name="email" placeholder="Enter name">
 					@error('email')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -73,7 +73,7 @@
 				</div>
 				<div class="form-group">
 					<label for="name">Password: </label>
-					<input type="text" value="{{ $guardian->password }}" class="form-control" id="password" name="password" placeholder="Enter name">
+					<input type="password" class="form-control" id="password" name="password" placeholder="Enter name">
 					@error('password')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>

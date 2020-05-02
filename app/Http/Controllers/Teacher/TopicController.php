@@ -18,7 +18,6 @@ class TopicController extends Controller
     public function index($course)
     {
         $topics = Course::findOrFail($course)->topics;
-        dd($topics);
         return view('teacher.topic.index', compact("topics", "course"));
     }
 
@@ -45,18 +44,14 @@ class TopicController extends Controller
             
             'name' => 'required|string|max:255',
             'details' => 'required'
-            
         ]);
-        
 
        $data =  CourseTopic::create([
             "name" => $request->name,
             "details" => $request->details,
             "course_id" => $course,
             "is_complete" => 0
-            
         ]);
-
 
         if ($request->file('course_matarial1')) {
             $lastId = $data->id;
