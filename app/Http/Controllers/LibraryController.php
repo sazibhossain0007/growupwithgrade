@@ -1,12 +1,18 @@
 <?php
 
-namespace App\Http\Controllers\teacher;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Library;
 use Illuminate\Http\Request;
 
 class LibraryController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth:teacher');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +20,8 @@ class LibraryController extends Controller
      */
     public function index()
     {
-        return view('teacher.library.index');
+        $libraries = Library::latest()->get();
+        return view('library.index', compact('libraries'));
     }
 
     /**
@@ -24,7 +31,7 @@ class LibraryController extends Controller
      */
     public function create()
     {
-       return view('teacher.library.create');
+       return view('library.create');
     }
 
     /**
@@ -36,17 +43,15 @@ class LibraryController extends Controller
     public function store(Request $request)
     {
          $request->validate([
-            
             'name' => 'required|string|max:255',
             'author' => 'required',
             'description' => 'required',
             'library_matarial' => 'required',
-            
         ]);
         
 
-       $data =  LibraryController::create([
-            "name" => $request->name,
+       $data =  Library::create([
+            "book_name" => $request->name,
             "author" => $request->author,
             "description" => $request->description
             
@@ -61,12 +66,11 @@ class LibraryController extends Controller
             $prictureInfo->move($folder,$picName);
             $picUrl = $folder.$picName;
             $productPic = $data::find($lastId);
-            $productPic->library_matarial = $picUrl;
+            $productPic->library_matarials = $picUrl;
            
             $productPic->save();
         }
-        dd($request);
-        return redirect()->route('teach.library.index', $course)->withSuccess("Book add Success.");
+        return redirect()->route('library.index')->withSuccess("Book add Success.");
     }
 
     /**
@@ -88,7 +92,8 @@ class LibraryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $library = Library::findOrFail($id);
+        return view('library.edit', compact('library'));
     }
 
     /**
@@ -100,7 +105,35 @@ class LibraryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+           'name' => 'required|string|max:255',
+           'author' => 'required',
+           'description' => 'required',
+           'library_matarial' => 'nullable',
+       ]);
+       
+
+      $data =  Library::findOrFail($id)->update([
+           "book_name" => $request->name,
+           "author" => $request->author,
+           "description" => $request->description
+           
+       ]);
+
+
+       if ($request->file('library_matarial')) {
+           $lastId = $data->id;
+           $prictureInfo = $request->file('library_matarial');
+           $picName = $lastId.$prictureInfo->getClientOriginalName();
+           $folder = "library_matarial/";
+           $prictureInfo->move($folder,$picName);
+           $picUrl = $folder.$picName;
+           $productPic = $data::find($lastId);
+           $productPic->library_matarials = $picUrl;
+          
+           $productPic->save();
+       }
+       return redirect()->route('library.index')->withSuccess("Book Update Success.");
     }
 
     /**
@@ -111,6 +144,7 @@ class LibraryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Library::findOrFail($id)->delete();
+        return redirect()->route("library.index")->withSuccess("Book delete Success.");
     }
 }

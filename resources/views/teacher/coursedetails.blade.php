@@ -24,7 +24,7 @@
             <!-- Main content -->
             <section class="content">
                <a href="{{ route('teach.topic.index', $course)}}" class="btn btn-primary"> List Of Topic</a>
-               <a href="{{ route('teach.topic.index', $course)}}" class="btn btn-secondary"> My Student</a>
+               <a href="{{ route('teach.course.coursedetails.studentlist', $course)}}" class="btn btn-secondary"> My Student</a>
 
             </section>
             <!-- /.content -->

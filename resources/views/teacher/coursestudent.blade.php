@@ -19,8 +19,9 @@
 			</div>
 			<div class="col-sm-6">
 				<ol class="breadcrumb float-sm-right">
-					<li class="breadcrumb-item"><a href="#">Home</a></li>
-					<li class="breadcrumb-item active">Blank Page</li>
+					<li class="breadcrumb-item"><a href="{{ route('teach.dashboard') }}">Courses</a></li>
+					<li class="breadcrumb-item"><a href="{{ route('teach.course.coursedetails.show', $course) }}">{{ $student_course->course_title }}</a></li>
+					<li class="breadcrumb-item active">Student List</li>
 				</ol>
 			</div>
 		</div>
@@ -44,27 +45,32 @@
 					<tr>
 						<th>ID</th>
 						<th>Name</th>
-						<th>Course</th>
+						<th>Email</th>
 						<th>Phone</th>
 						
 					</tr>
 				</thead>
 				<tbody>
 					
+				@if(!empty($student_course))
+                   @foreach($student_course->students as $student)
 					<tr>
-						<td>1000645</td>
-						<td>Sazib</td>
-						<td>DW</td>
-						<td>0181700040</td>
+						<td>{{ $student->id}}</td>
+						<td>{{ $student->name}}</td>
+						<td>{{ $student->email}}</td>
+						<td>{{ $student->phone}}</td>
 						
 					</tr>
+					@endforeach
+				@endif
+
 					
 				</tbody>
 				<tfoot>
 					<tr>
 						<th>ID</th>
 						<th>Name</th>
-						<th>Course</th>
+						<th>Email</th>
 						<th>Phone</th>
 					</tr>
 				</tfoot>

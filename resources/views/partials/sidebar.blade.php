@@ -42,6 +42,12 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a href="{{ route('library.index') }}" class="nav-link" >
+                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>Library</p>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="{{url('/teacher/forum')}}" class="nav-link" target="_blank" >
                     <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>Forum</p>

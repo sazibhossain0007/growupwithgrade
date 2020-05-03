@@ -16,6 +16,10 @@ class CreateAssessmentsTable extends Migration
         Schema::create('assessments', function (Blueprint $table) {
             $table->id();
             $table->integer("topic_id");
+            $table->string("question");
+            $table->text("options");
+            $table->string("answer");
+            $table->string("mark");
             $table->timestamps();
         });
     }

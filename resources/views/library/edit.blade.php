@@ -12,12 +12,13 @@
 	<div class="container-fluid">
 		<div class="row mb-2">
 			<div class="col-sm-6">
-				<h1>Course Details</h1>
+				<h1>Library Upload</h1>
 			</div>
 			<div class="col-sm-6">
 				<ol class="breadcrumb float-sm-right">
-					<li class="breadcrumb-item"><a href="#">Home</a></li>
-					<li class="breadcrumb-item active">Blank Page</li>
+					<li class="breadcrumb-item"><a href="{{ route('teach.dashboard') }}">Courses</a></li>
+					<li class="breadcrumb-item"><a href="{{ route('library.index') }}">Library</a></li>
+					<li class="breadcrumb-item active">Update Book</li>
 				</ol>
 			</div>
 		</div>
@@ -32,22 +33,13 @@
 		<!-- /.card-header -->
 		@include('partials.notification')
 		<!-- form start -->
-		<form role="form" action="" method="post">
+		<form role="form" action="{{ route('library.update', $library->id) }}" method="post" enctype="multipart/form-data">
 			@csrf
+            @method('put')
 			<div class="card-body">
 				<div class="form-group">
-					<label for="id">Course Id:</label>
-					<input type="text" class="form-control @error('id') is-invalid @enderror" id="id" name="id" placeholder="Course Id" value="{{ old('id') }}">
-
-                    @error('id')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-				</div>
-				<div class="form-group">
-					<label for="name">Topic Title: </label>
-					<input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" placeholder="Enter name" value="{{ old('name') }}">
+					<label for="name">Book Name: </label>
+					<input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" placeholder="Enter name" value="{{ $library->book_name}}"> 
 
 					@error('name')
                         <span class="invalid-feedback" role="alert">
@@ -56,22 +48,38 @@
                     @enderror
 				</div>
 				<div class="form-group">
-					<label for="details">Details: </label>
-					<textarea type="textarea" class="form-control @error('details') is-invalid @enderror" id="details" name="details" placeholder="Enter Course Details" value="{{ old('details') }}" cols="30" rows="10"></textarea>
-					
-					@error('details')
+					<label for="name">Author: </label>
+					<input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="author" placeholder="Enter Author name" value="{{ $library->author}}"> 
+
+					@error('name')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
                     @enderror
 				</div>
+				<div class="form-group">
+					<label for="name">Description: </label>
+					<textarea type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="description" placeholder="Enter name" value="">{{ $library->description}}</textarea>
+
+					@error('name')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+				</div>
+				
+				<div class="form-group">
+					<label>File </label>
+					<input type="file" class="form-control" name="library_matarial" >
+				</div>
+				
 			
 				
 			</div>
 			<!-- /.card-body -->
 
 			<div class="card-footer">
-				<button type="submit" class="btn btn-primary">Save</button>
+				<button type="submit" class="btn btn-primary">Upload</button>
 			</div>
 		</form>
 	</div>

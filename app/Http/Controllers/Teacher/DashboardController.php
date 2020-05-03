@@ -22,7 +22,13 @@ class DashboardController extends Controller
    	{
    		$course = Course::findOrFail($id);
    		return view('teacher.coursedetails', compact('course', 'id'));
-   	}
+    }
+    
+    public function studentList($course)
+    {
+        $student_course = Course::findOrFail($course);
+        return view("teacher.coursestudent", compact("student_course", "course"));
+    }
 
    	public function topicList($course)
    	{
@@ -35,8 +41,7 @@ class DashboardController extends Controller
     public function showProfile($id)
     {
         $teacher_details = Teacher::where('teacher_id',$id)->get()->first();
-//        dd($teacher_details);
-        return view('teacher.create', compact('teacher_details'));
+        return view('teacher.profile', compact('teacher_details'));
    	}
 
     public function updateProfile(Request $request, $id)

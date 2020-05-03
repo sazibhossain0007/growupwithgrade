@@ -18,7 +18,7 @@ class CreateLibrariesTable extends Migration
             $table->string("book_name");
             $table->string("author");
             $table->string("description");
-            $table->string('library_matarials');
+            $table->string('library_matarials')->nullable();
             $table->timestamps();
         });
     }

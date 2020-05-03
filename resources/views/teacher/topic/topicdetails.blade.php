@@ -54,7 +54,7 @@
 
                         
                         <td>
-                            <a class="btn btn-primary" href="">Add Assessment</a>
+                            <a class="btn btn-primary" href="{{ route('teach.assessment.index', [$course, $topic->id]) }}">Assessments</a>
 
                         </td>
                     </tr>

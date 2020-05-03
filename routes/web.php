@@ -66,11 +66,9 @@ Route::prefix('/teacher')->name('teach.')->middleware("auth:teacher")->group(fun
 
 	Route::resource('/coursedetails/{course}/topic', "Teacher\TopicController");
 	Route::resource('/coursedetails/{course}/{topic}/assessment', "Teacher\AssessmentController");
-	Route::resource('/coursedetails/{course}/{topic}/matarial', "Teacher\TopicMatarialController");
 
-	Route::resource('/coursedetails/{course}/{topic}/matarial', "Teacher\TopicMatarialController");
-	Route::resource('/library', "Teacher\LibraryController");
-
+	Route::get('/coursedetails/{course}/studentlist', "Teacher\DashboardController@studentList")->name("course.coursedetails.studentlist");
+	
     Route::get('/profile/{id}', "Teacher\DashboardController@showProfile");
     Route::post('/profile/{id}', "Teacher\DashboardController@updateProfile");
 
@@ -112,6 +110,9 @@ Route::prefix('/guardian')->name('guardian.')->namespace('Guardian')->middleware
 	})->name("dashboard");
 
 });
+
+
+Route::resource('/library', "LibraryController");
 
 Route::middleware("auth")->prefix('/admin')->group(function(){
 	Route::resource('student', 'StudentController');

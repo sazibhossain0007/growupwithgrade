@@ -16,8 +16,9 @@
 			</div>
 			<div class="col-sm-6">
 				<ol class="breadcrumb float-sm-right">
-					<li class="breadcrumb-item"><a href="#">Home</a></li>
-					<li class="breadcrumb-item active">Blank Page</li>
+					<li class="breadcrumb-item"><a href="{{ route('teach.dashboard') }}">Courses</a></li>
+					<li class="breadcrumb-item"><a href="{{ route('library.index') }}">Library</a></li>
+					<li class="breadcrumb-item active">Add Book</li>
 				</ol>
 			</div>
 		</div>
@@ -32,9 +33,8 @@
 		<!-- /.card-header -->
 		@include('partials.notification')
 		<!-- form start -->
-		<form role="form" action="{{ route('teach.library.create') }}" method="post" enctype="multipart/form-data">
+		<form role="form" action="{{ route('library.store') }}" method="post" enctype="multipart/form-data">
 			@csrf
-			@method('PUT')
 			<div class="card-body">
 				<div class="form-group">
 					<label for="name">Book Name: </label>
