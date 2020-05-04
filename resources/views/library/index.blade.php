@@ -9,7 +9,7 @@
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1>Blank Page for teacher</h1>
+                            <h1> Library </h1>
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
@@ -33,7 +33,11 @@
                         <th>Author</th>
                         <th>Description</th>
                         <th>Matarial</th>
+                        @if(Auth::guard('student')->check())
+                        @elseif(Auth::guard('guardian')->check())
+                        @else
                         <th>Action</th>
+                        @endif
                     </tr>
                 </thead>
                 <tbody>
@@ -50,6 +54,9 @@
                                 <a href="{{ asset($library->library_matarials) }}" class="btn btn-primary">Download</a>
                             @endif
                         </td>
+                        @if(Auth::guard('student')->check())
+                        @elseif(Auth::guard('guardian')->check())
+                        @else
                         <td>
                             <a class="btn btn-primary" href="{{ route('library.edit', $library->id) }}">Edit</a>
 
@@ -59,6 +66,7 @@
                                     <button onclick="return confirm('Are you sure to delete this student?')" type="submit" class="btn btn-danger">Delete</button>
                             </form>
                         </td>
+                        @endif
                     </tr>
                     @endforeach
                 @endif
@@ -70,13 +78,21 @@
                         <th>Author</th>
                         <th>Description</th>
                         <th>Matarial</th>
+                        @if(Auth::guard('student')->check())
+                        @elseif(Auth::guard('guardian')->check())
+                        @else
                         <th>Action</th>
+                        @endif
                     </tr>
                 </tfoot>
             </table>
             <hr>
 
+            @if(Auth::guard('student')->check())
+            @elseif(Auth::guard('guardian')->check())
+            @else
              <a href="{{ route('library.create')}}" class="btn btn-primary" style="align:center"> Add New Book</a>
+            @endif
 
             </section>
             <!-- /.content -->

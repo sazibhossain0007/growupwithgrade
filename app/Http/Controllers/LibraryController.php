@@ -5,14 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Library;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LibraryController extends Controller
 {
-
-    public function __construct()
-    {
-        $this->middleware('auth:teacher');
-    }
     /**
      * Display a listing of the resource.
      *
@@ -20,6 +16,7 @@ class LibraryController extends Controller
      */
     public function index()
     {
+        // dd(Auth::check());
         $libraries = Library::latest()->get();
         return view('library.index', compact('libraries'));
     }

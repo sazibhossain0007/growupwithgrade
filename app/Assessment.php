@@ -18,4 +18,5 @@ class Assessment extends Model
     {
     	return $this->belongsTo(CourseTopic::class, "course_topic_id");
     }
+
 }

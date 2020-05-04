@@ -17,11 +17,16 @@ class CourseTopic extends Model
 
    	public function assessments()
    	{
-   		return $this->hasMany(Assessment::class);
+   		return $this->hasMany(Assessment::class, 'topic_id');
    	}
 
    	public function matarials()
    	{
    		return $this->hasMany(TopicMatarial::class);
    	}
+
+	public function student_assisment()
+	{
+		return $this->hasOne(StudentAssesment::class, "course_topic_id");
+	}
 }

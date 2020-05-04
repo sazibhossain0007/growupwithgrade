@@ -30,22 +30,16 @@ Route::post('/login/teacher', 'Auth\LoginController@teacherLogin');
 Route::get('/home', 'HomeController@index')->name('home');
 
 
-//Route::prefix('/student')->name('student.')->namespace('Student')->middleware("auth:student")->group(function(){
 Route::prefix('/student')->name('student.')->middleware("auth:student")->group(function(){
-	Route::get('dashboard', function () {
-	    return view('student.index');
-	})->name("dashboard");
-	Route::get('/coursedetails', function () {
-	    return view('student.coursedetails');
-	});
+	
+	Route::get('dashboard', "Student\DashboardController@courses")->name("dashboard");
+	Route::get('coursedetails/{id}', "Student\DashboardController@coursedetails")->name("coursedetails");
+	Route::get('coursedetails/{id}/topic/{topic}/assessments', "Student\DashboardController@assessments")->name("coursedetails.assessments");
+	Route::post('coursedetails/{id}/topic/{topic}/assessments', "Student\DashboardController@assessmentsPost")->name("coursedetails.assessments.post");
+
 	Route::get('/studentblog', function () {
 	    return view('student.studentblog');
 	});
-
-	Route::get('/library', function () {
-	    return view('student.library');
-	});
-
 
     Route::get('/profile/{id}', "Teacher\DashboardController@showProfile");
     Route::post('/profile/{id}', "Teacher\DashboardController@updateProfile");
@@ -58,7 +52,6 @@ Route::prefix('/student')->name('student.')->middleware("auth:student")->group(f
     Route::post('/forum/delete/{id}', "PostController@deletePost");
 });
 
-//Route::prefix('/teacher')->name('teach.')->namespace('Teacher')->middleware("auth:teacher")->group(function(){
 Route::prefix('/teacher')->name('teach.')->middleware("auth:teacher")->group(function(){
 
 	Route::get('dashboard', "Teacher\DashboardController@index")->name("dashboard");
@@ -78,30 +71,6 @@ Route::prefix('/teacher')->name('teach.')->middleware("auth:teacher")->group(fun
     Route::get('/post/{id}', "PostController@singlePost");
     Route::post('/forum/edit/{id}', "PostController@editPost");
     Route::post('/forum/delete/{id}', "PostController@deletePost");
-
-	// Route::get('/coursedetails/{course}/addtopic', function () {
-	//     return view('teacher.addtopic');
-	// }) ->name('addtopic');
-
-	// Route::get('/coursestudent', function () {
-	//     return view('teacher.coursestudent');
-	// }) ->name('coursestudent');
-
-	// Route::get('/coursedetails/{course}/topic/{topic}', function () {
-	//     return view('teacher.topic');
-	// });
-
-	// Route::get('/topicdetails', function () {
-	//     return view('teacher.topicdetails');
-	// }) ->name('topicdetails');
-
-	// Route::get('/addfile', function () {
-	//     return view('teacher.addfile');
-	// }) ->name('addfile');
-
-	// Route::get('/assessment', function () {
-	//     return view('teacher.assessment');
-	// }) ->name('assessment');
 });
 
 Route::prefix('/guardian')->name('guardian.')->namespace('Guardian')->middleware("auth:guardian")->group(function(){
@@ -110,9 +79,9 @@ Route::prefix('/guardian')->name('guardian.')->namespace('Guardian')->middleware
 	})->name("dashboard");
 
 });
-
-
-Route::resource('/library', "LibraryController");
+Route::group(['middleware'=>['library']],function(){
+	Route::resource('/library', "LibraryController");
+});
 
 Route::middleware("auth")->prefix('/admin')->group(function(){
 	Route::resource('student', 'StudentController');

@@ -16,8 +16,12 @@
                 <img src="{{ asset('img/user2-160x160.jpg') }}" class="img img-circle elevation-2" width="50px" height="50px" alt="User Image">
             </div>
             <div class="info">
-                @if(Auth::user()->getTable() == 'teachers')
-                <a href="{{url('/teacher/profile/'.Auth::user()->teacher_id)}}" class="d-block">{{ Auth::user()->name }}</a>
+                @if(Auth::guard('student')->check())
+                    <a href="#" class="d-block">{{ Auth::guard('student')->user()->name }}</a>
+                @elseif(Auth::guard('teacher')->check())
+                    <a href="#" class="d-block">{{ Auth::guard('teacher')->user()->name }}</a>
+                @elseif(Auth::guard('guardian')->check())
+                    <a href="#" class="d-block">{{ Auth::guard('guardian')->user()->name }}</a>
                 @else
                     <a href="#" class="d-block">{{ Auth::user()->name }}</a>
                 @endif
@@ -28,6 +32,18 @@
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             @if(Auth::guard('student')->check())
+                <li class="nav-item">
+                    <a href="{{ route('student.dashboard') }}" class="nav-link" >
+                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>Courses</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('library.index') }}" class="nav-link" >
+                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>Library</p>
+                    </a>
+                </li>
                 <li class="nav-item">
                     <a href="{{url('/student/forum')}}" class="nav-link" target="_blank" >
                     <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -90,7 +106,7 @@
                     </a>
                 </li>
                  <li class="nav-item">
-                    <a href="{{ route('teach.library.index')}}" class="nav-link">
+                    <a href="{{ route('library.index')}}" class="nav-link">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>Library</p>
                     </a>
