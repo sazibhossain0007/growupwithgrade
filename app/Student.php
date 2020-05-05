@@ -24,9 +24,9 @@ class Student extends Authenticatable
     	return $this->belongsToMany(Course::class, 'student_courses');
     }
 
-    public function course_prograss($course_id)
+    public function course_prograss($course_id, $student_id)
     {
-        $total_asses = DB::statement("select COUNT(*) AS total from student_assesments AS sa, students AS s, courses AS c WHERE sa.student_id = s.id AND sa.course_id = c.id AND c.id = $course_id AND s.id = " . Auth::id());
+        $total_asses = DB::statement("select COUNT(*) AS total from student_assesments AS sa, students AS s, courses AS c WHERE sa.student_id = s.id AND sa.course_id = c.id AND c.id = $course_id AND s.id = $student_id");
 
         $total_course_topic = count(Course::findOrFail($course_id)->topics);
         return $total_course_topic / $total_asses;

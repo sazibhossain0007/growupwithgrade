@@ -17,4 +17,9 @@ class Guardian extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function student()
+    {
+        return $this->hasOne(Student::class, "guardian_id");
+    }
 }

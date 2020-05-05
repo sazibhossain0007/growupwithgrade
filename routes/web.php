@@ -37,10 +37,6 @@ Route::prefix('/student')->name('student.')->middleware("auth:student")->group(f
 	Route::get('coursedetails/{id}/topic/{topic}/assessments', "Student\DashboardController@assessments")->name("coursedetails.assessments");
 	Route::post('coursedetails/{id}/topic/{topic}/assessments', "Student\DashboardController@assessmentsPost")->name("coursedetails.assessments.post");
 
-	Route::get('/studentblog', function () {
-	    return view('student.studentblog');
-	});
-
     Route::get('/profile/{id}', "Teacher\DashboardController@showProfile");
     Route::post('/profile/{id}', "Teacher\DashboardController@updateProfile");
 
@@ -74,10 +70,9 @@ Route::prefix('/teacher')->name('teach.')->middleware("auth:teacher")->group(fun
 });
 
 Route::prefix('/guardian')->name('guardian.')->namespace('Guardian')->middleware("auth:guardian")->group(function(){
-	Route::get('dashboard', function () {
-	    return view('guardian.blank');
-	})->name("dashboard");
 
+	Route::get('dashboard', "DashboardController@courses")->name("dashboard");
+	Route::get('coursedetails/{id}', "DashboardController@coursedetails")->name("coursedetails");
 });
 Route::group(['middleware'=>['library']],function(){
 	Route::resource('/library', "LibraryController");

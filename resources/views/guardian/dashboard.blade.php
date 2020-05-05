@@ -13,7 +13,7 @@
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="{{ route('student.dashboard') }}">Dashboard</a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('guardian.dashboard') }}">Dashboard</a></li>
                                 <li class="breadcrumb-item active">Courses</li>
                             </ol>
                         </div>
@@ -35,9 +35,9 @@
                                 <span class="fa fa-leanpub ser-icon" aria-hidden="true"></span>
                                 <h4 class="text-bl my-4">{{ $course->course_title }}</h4>
                                 <div class="progress">
-                                <div class="progress-bar" role="progressbar" style="width: {{Auth::user()->course_prograss($course->id, Auth::id())}}%;" aria-valuenow="{{Auth::user()->course_prograss($course->id, Auth::id())}}" aria-valuemin="0" aria-valuemax="100">{{Auth::user()->course_prograss($course->id, Auth::id())}}%</div>
+                                <div class="progress-bar" role="progressbar" style="width: {{Auth::user()->student->course_prograss($course->id, Auth::user()->student->id)}}%;" aria-valuenow="{{Auth::user()->student->course_prograss($course->id, Auth::user()->student->id)}}" aria-valuemin="0" aria-valuemax="100">{{Auth::user()->student->course_prograss($course->id, Auth::user()->student->id)}}%</div>
                                 </div>
-                                <a class="service-btn mt-xl-5 mt-4 btn" href="{{ route('student.coursedetails', $course->id) }}">Read More<span class="fa fa-long-arrow-right ml-2"></span></a>
+                                <a class="service-btn mt-xl-5 mt-4 btn" href="{{ route('guardian.coursedetails', $course->id) }}">Read More<span class="fa fa-long-arrow-right ml-2"></span></a>
                             </div>
                         </div>
                     @endforeach
