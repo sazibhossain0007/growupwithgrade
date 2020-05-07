@@ -39,11 +39,12 @@ class TeacherController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'id' => 'required|max:11|unique:teachers',
+            'id' => 'required|numeric|unique:teachers',
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:teachers',
             'phone' => 'required|min:11|unique:teachers',
             'password' => 'required|min:8',
+            'profile_pic' => 'required|image|mimes:jpeg,png,jpg',
             'courses' => 'required'
         ]);
         
@@ -52,6 +53,7 @@ class TeacherController extends Controller
             "name" => $request->name,
             "email" => $request->email,
             "phone" => $request->phone,
+            "profile_pic" => $request->profile_pic->store('uploads/avaters/'),
             "password" => bcrypt($request->password)
         ]);
 
@@ -85,7 +87,8 @@ class TeacherController extends Controller
     public function edit($id)
     {
         $teacher = Teacher::findOrFail($id);
-        return view('admin.teacher.edit', compact ('teacher'));
+        $courses = Course::latest()->get();
+        return view('admin.teacher.edit', compact ('teacher', 'courses'));
     }
 
     /**
@@ -100,6 +103,8 @@ class TeacherController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'phone' => 'required|min:11',
+            'profile_pic' => 'nullable|image|mimes:jpeg,png,jpg',
+            'courses' => 'required',
             'password' => 'nullable|min:8'
         ]);
        
@@ -107,12 +112,25 @@ class TeacherController extends Controller
         $teacher->name = $request->name;
         $teacher->phone = $request->phone;
 
+        if($request->hasFile('profile_pic')){
+            $teacher->profile_pic = $request->profile_pic->store('uploads/avaters/');
+        }
+
         if(isset($request->password)){
             $teacher->password = bcrypt($request->password);
-            $teacher->save();
         }
         
         $teacher->save();
+
+
+        DB::table("teacher_courses")->where('teacher_id', $teacher->id)->delete();
+
+        foreach ($request->courses as $course) {
+            DB::table("teacher_courses")->insert([
+               "teacher_id" =>  $teacher->id,
+               "course_id" => $course
+            ]);
+        }
 
         return redirect()->route("teacher.index")->withSuccess("teachert update Success.");
     }

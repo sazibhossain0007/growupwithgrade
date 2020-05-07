@@ -124,11 +124,15 @@ class PostController extends Controller
     }
     public function deletePost($id)
     {
-        $post = Post::find($id);
+        Post::find($id)->delete();
 
-        if($post->delete()){
+        if (Auth::user()->getTable() == 'teachers'){
             return redirect('teacher/forum')->with('success','Post deleted succesfully!!');
         }
+        if (Auth::user()->getTable() == 'students'){
+            return redirect('student/forum')->with('success','Post deleted succesfully!!');
+        }
+
     }
 
 }

@@ -26,7 +26,7 @@
  <!-- services -->
     <div class="services py-5" id="what">
         <div class="container py-xl-5 py-lg-3">
-            <h3 class="title-w3 mb-xl-5 mb-sm-4 mb-2 text-center text-wh font-weight-bold">My Courses</h3>
+            <h3 class="title-w3 mb-xl-5 mb-sm-4 mb-2 text-center text-wh font-weight-bold">{{ Auth::user()->student->name }} Courses</h3>
             <div class="row w3pvtits-services-row text-center">
                 @if(!empty($courses))
                     @foreach($courses as $course)

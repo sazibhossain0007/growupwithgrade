@@ -1,6 +1,13 @@
 @extends('layouts.post_layout')
 
 @section('content')
+    <?php
+    if(Auth::user()->getTable() == 'teachers'){
+        $url = 'teacher';
+    }elseif (Auth::user()->getTable() == 'students'){
+        $url = 'student';
+    }
+    ?>
     <div class="col-md-12">
         <button type="button" class="btn btn-success btn-sm my-2" data-toggle="modal" data-target="#addPost">Add new</button>
     @if(count($allPosts)>0)
@@ -10,7 +17,7 @@
                 <img src="{{asset('profile_pics/'.$creator[$key]['profile_pic'])}}" alt="" width="100%" height="100%" class=" border border-dark rounded-circle p-1">
             </div>
             <div class="col-md-11 text-left">
-                <h4 class="m-0"><a href="{{url('teacher/post/'.$post['id'])}}">{{ $post['post_title'] }}</a></h4>
+                <h4 class="m-0"><a href="{{url($url . '/post/'.$post['id'])}}">{{ $post['post_title'] }}</a></h4>
                 <small><strong>Created by:</strong> {{$creator[$key]['name']}} at {{ date('Y-m-d',strtotime($post['created_at'])) }}</small>
                 <p>{{ $post['post_details'] }}</p>
             </div>
@@ -20,24 +27,12 @@
         <p>No available post!! Create One!!!</p>
         @endif
 
-{{--        @for ($i = 0; $i < sizeof($allPosts); $i++)--}}
-{{--         {{$allPosts[$i] .' '. $creator[$i]}}--}}
-{{--        @endfor--}}
-
-
         <!-- Modal -->
         <div class="modal fade" id="addPost" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <?php
-                    if(Auth::user()->getTable() == 'teachers'){
-                        $url = 'teacher/forum/addNew';
-                    }elseif (Auth::user()->getTable() == 'students'){
-                        $url = 'student/forum/addNew';
-                    }
-                    ?>
 
-                    <form action="{{url($url)}}" method="post">
+                    <form action="{{url($url . '/forum/addNew')}}" method="post">
                     @csrf
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Add new post</h5>

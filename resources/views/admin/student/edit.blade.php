@@ -34,7 +34,7 @@
 		<!-- /.card-header -->
 
 		<!-- form start -->
-		<form role="form" action="{{ route('student.update', $student->id) }}" method="post">
+		<form role="form" action="{{ route('student.update', $student->id) }}" method="post" enctype="multipart/form-data">
 			@csrf
 			@method('PUT')
 			<div class="card-body">
@@ -70,6 +70,16 @@
 					<label for="name">Phone: </label>
 					<input type="text" value="{{ $student->phone }}" class="form-control" id="phone" name="phone" placeholder="Enter name">
 					@error('phone')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+				</div>
+				<div class="form-group">
+					<label for="profile_pic">Profile Pic (160x160): </label>
+					<input type="file" class="form-control @error('profile_pic') is-invalid @enderror" id="profile_pic" name="profile_pic" value="{{ old('profile_pic') }}">
+
+					@error('profile_pic')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>

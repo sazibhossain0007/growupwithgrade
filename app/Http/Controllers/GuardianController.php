@@ -37,7 +37,7 @@ class GuardianController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'id' => 'required|max:11|unique:guardians',
+            'id' => 'required|numeric|unique:guardians',
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:guardians',
             'phone' => 'required|min:11|unique:guardians',

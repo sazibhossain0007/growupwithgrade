@@ -43,11 +43,12 @@ class StudentController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'id' => 'required|max:11|unique:students',
+            'id' => 'required|numeric|unique:students',
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:students',
             'phone' => 'required|min:11|unique:students',
             'password' => 'required|min:8',
+            'profile_pic' => 'required|image|mimes:jpeg,png,jpg',
             'courses' => 'required'
         ]);
 
@@ -57,6 +58,7 @@ class StudentController extends Controller
             "email" => $request->email,
             "phone" => $request->phone,
             "guardian_id" => $request->guardian,
+            "profile_pic" => $request->profile_pic->store('uploads/avaters/'),
             "password" => bcrypt($request->password)
         ]);
 
@@ -110,6 +112,7 @@ class StudentController extends Controller
             'phone' => 'required|min:11',
             'guardian' => 'required',
             'password' => 'nullable|min:8',
+            'profile_pic' => 'nullable|image|mimes:jpeg,png,jpg',
             'courses' => 'required'
         ]);
         
@@ -118,9 +121,12 @@ class StudentController extends Controller
         $student->phone = $request->phone;
         $student->guardian_id = $request->guardian;
 
+        if($request->hasFile('profile_pic')){
+            $student->profile_pic = $request->profile_pic->store('uploads/avaters/');
+        }
+
         if(isset($request->password)){
             $student->password = bcrypt($request->password);
-            $student->save();
         }
         
         $student->save();

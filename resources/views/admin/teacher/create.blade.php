@@ -33,7 +33,7 @@
 	<div class="card card-primary">
 		<!-- /.card-header -->
 		<!-- form start -->
-		<form role="form" action="{{ route('teacher.store') }}" method="post">
+		<form role="form" action="{{ route('teacher.store') }}" method="post" enctype="multipart/form-data">
 			@csrf
 			<div class="card-body">
 				<div class="form-group">
@@ -71,6 +71,16 @@
 					<input type="text" class="form-control @error('phone') is-invalid @enderror" id="phone" name="phone" placeholder="Enter phone number" value="{{ old('phone') }}">
 
 					@error('phone')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+				</div>
+				<div class="form-group">
+					<label for="profile_pic">Profile Pic (160x160): </label>
+					<input type="file" class="form-control @error('profile_pic') is-invalid @enderror" id="profile_pic" name="profile_pic" value="{{ old('profile_pic') }}">
+
+					@error('profile_pic')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>

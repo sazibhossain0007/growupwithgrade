@@ -28,12 +28,19 @@
     </style>
 </head>
 <body>
+<?php
+if (Auth::user()->getTable() == 'teachers') {
+    $url = 'teacher';
+} elseif (Auth::user()->getTable() == 'students') {
+    $url = 'student';
+}
+?>
 <!-- Image and text -->
 <nav class="navbar navbar-dark bg-dark">
-    <a class="navbar-brand ml-5 text-center" href="{{ url('/teacher/forum') }}">
+    <a class="navbar-brand ml-5 text-center" href="{{ url( '/' . $url . '/forum') }}">
        <span id="brandLogo">F</span>o<span id="brandLogo">r</span>u<span id="brandLogo">m</span>
     </a>
-    <a href="{{url('/teacher/dashboard')}}" class="pull-right pr-5">Leave Forum</a>
+    <a href="{{url( '/' . $url . '/dashboard')}}" class="pull-right pr-5">Leave Forum</a>
 </nav>
 
 

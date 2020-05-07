@@ -13,7 +13,14 @@
         <!-- Sidebar user (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
+
+                @if(Auth::guard('student')->check())
+                <img src="{{ asset(Auth::guard('student')->user()->profile_pic) }}" class="img img-circle elevation-2" width="50px" height="50px" alt="User Image">
+                @elseif(Auth::guard('teacher')->check())
+                <img src="{{ asset(Auth::guard('teacher')->user()->profile_pic) }}" class="img img-circle elevation-2" width="50px" height="50px" alt="User Image">
+                @else
                 <img src="{{ asset('img/user2-160x160.jpg') }}" class="img img-circle elevation-2" width="50px" height="50px" alt="User Image">
+                @endif
             </div>
             <div class="info">
                 @if(Auth::guard('student')->check())
