@@ -1,6 +1,6 @@
 @extends('layouts.dashboard')
 
-@section('title') Blank @endsection
+@section('title') Dashboard @endsection
 
 @section('content')
 

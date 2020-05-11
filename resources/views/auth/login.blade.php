@@ -60,13 +60,7 @@
             </form>
             <!-- /.social-auth-links -->
 
-            @if (Route::has('password.request'))
-            <p class="mb-1">
-                <a href="{{ route('password.request') }}">
-                    {{ __('Forgot Your Password?') }}
-                </a>
-            </p>
-            @endif
+            
     </div>
     <!-- /.login-card-body -->
 </div>

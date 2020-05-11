@@ -56,7 +56,7 @@ class DashboardController extends Controller
             "course_id" => $course->id,
             "mark" => $mark
         ]);
-        return redirect()->route("student.coursedetails", $id)->withSuccess("Assisment submit complite.");
+        return redirect()->route("student.coursedetails", $id)->withSuccess("Assisment submit complete.");
     }
     
 }
